@@ -11,7 +11,6 @@ module.exports = app => {
         }
 
         const username = req.body.username
-        
 
         const user = await app.SysQuality('tbusuario')
             .select('c_usuario','login', 'vendedor', 'analisador', 's_usuario')
