@@ -5,12 +5,13 @@ const path = require('path')
 const consign = require('consign')
 const fs = require('fs')
 const hash = require('hash-generator')
-const { dbSysQuality } = require('./config/db')
+const { dbSysQuality, dbVirtuante } = require('./config/db')
 const SSE = require('express-sse')
 const static = path.join(__dirname, 'static');
 
 app.sse = new SSE("Conectado")
-app.dbSysQuality = dbSysQuality 
+app.dbSysQuality = dbSysQuality
+app.dbVirtuante = dbVirtuante 
 app.fs = fs 
 app.hash = hash 
 app.set('view engine', 'hbs') 

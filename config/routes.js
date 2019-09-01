@@ -7,17 +7,25 @@ module.exports = app => {
         .get(app.sse.init)
 
     app.post('/', app.api.notFound)
-    app.post('/login', app.api.auth.login) // Login
+    app.post('/signin', app.api.auth.signin) // Login
+    
+    app.get('/documents', app.api.documents.getAll)
 
     //SYS QUALITY
  
-    app.post('/sysquality/os', app.api.sysquality.os.getAll)
+    app.route('/sysquality/os')
+        .get(app.api.sysquality.os.getAll)
+        .post(app.api.sysquality.os.create)
+        
     app.route('/sysquality/os/:id')
         .get(app.api.sysquality.os.getOne)
         .put(app.api.sysquality.os.update)
         .delete(app.api.sysquality.os.remove)
 
-    app.post('/sysquality/clients', app.api.sysquality.clients.getAll)
+    app.route('/sysquality/clients')
+        .get(app.api.sysquality.clients.getAll)
+        .post(app.api.sysquality.clients.create)
+        
     app.route('/sysquality/clients/:id')
         .get(app.api.sysquality.clients.getOne)
         .put(app.api.sysquality.clients.update)

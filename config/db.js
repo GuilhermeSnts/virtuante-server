@@ -3,12 +3,21 @@ const knex = require('knex')
   const dbSysQuality = knex({
     client: 'mysql2',
     connection: {
-      host: 'mysql.flexcard.org.br',
-      port: 3306,
-      user: 'flexcard01',
-      password: '123sdm123',
-      database: 'flexcard01'
+      host: 'sql171.main-hosting.eu',
+      user: 'u657270620_tec',
+      password: 'xFxbpm8Lwd1P',
+      database: 'u657270620_tec'
     }
   })
 
-  module.exports = { dbSysQuality }
+  const dbVirtuante = knex({
+    client: 'mysql2',
+    connection: {
+      host: 'sql171.main-hosting.eu',
+      user: 'u657270620_tec',
+      password: 'xFxbpm8Lwd1P',
+      database: 'u657270620_tec'
+    }
+  })
+
+  module.exports = { dbSysQuality, dbVirtuante }
