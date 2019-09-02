@@ -15,22 +15,47 @@ module.exports = app => {
 
     const getOne = (req, res) => {
         app.dbSysQuality('os_tb')
-            .where({ id_os : req.params.id })
+            .where({
+                id_os: req.params.id
+            })
             .first()
             .then(os => res.status(200).json(os))
             .catch(error => res.status(500).send(error))
     }
 
-    const create = (req, res) => {
-        app.dbSysQuality('os_tb')
-            .insert({...req.body})
-            .then(_ => res.status(204).json())
-            .catch(error => res.status(500).send(error))
+    const create = async (req, res) => {
+
+        let os = req.body.data
+
+        console.log(req.body)
+
+        let numeroOS = await app.dbSysQuality('os_tb')
+            .select('numero_os')
+            .orderBy('id_os', 'desc')
+            .first()
+        let novoRadical = parseInt(numeroOS.numero_os.split("-")[1]) + 1
+        let osNumber = novoRadical.toString().padStart(4, "0")
+
+        let fullYear = new Date().getFullYear()
+        let year = fullYear.toString().substring(2)
+
+        let newOsNumber = "SQ" + year + "-" + osNumber
+
+        app.dbSysQuality('os_tb').insert({
+                ...req.body,
+                numero_os: newOsNumber,
+                status_os: 'AGUARDANDO AVALIAÇÃO'
+            })
+            .then(_ => res.status(204).send())
+            .catch(_ => res.status(500).send('ocorreu um erro ao gravar no banco de dados'))
     }
+
 
     const update = (req, res) => {
         app.dbSysQuality('os_tb')
-            .update({...req.body})
+            .update({
+                ...req.body
+            })
             .where({
                 id_os: req.params.id
             })
