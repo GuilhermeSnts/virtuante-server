@@ -6,7 +6,7 @@ module.exports = app => {
     app.route('/evento')
         .get(app.sse.init)
 
-    app.post('/', app.api.notFound)
+    app.get('/', app.api.notFound)
     app.post('/signin', app.api.auth.signin) // Login
     
     app.get('/documents', app.api.documents.getAll)
