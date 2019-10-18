@@ -11,7 +11,8 @@ const static = path.join(__dirname, 'static');
 
 app.sse = new SSE("Conectado")
 app.dbSysQuality = dbSysQuality
-app.dbVirtuante = dbVirtuante 
+app.db = dbSysQuality 
+app.dbVirtuante = dbVirtuante
 app.fs = fs 
 app.hash = hash 
 app.set('view engine', 'hbs') 
@@ -20,6 +21,7 @@ app.use('/static', express.static(static));
 
 consign() 
     .include('./config/middlewares.js') 
+    .then('./api/validation.js')
     .then('./api') 
     .then('./config/routes.js') 
     .then('./config/boot.js')

@@ -12,16 +12,18 @@ module.exports = app => {
 
         const emailOrUsername = req.body.emailOrUsername
 
-        const user = await app.dbVirtuante('users')
+        const user = await app.db('users')
             .select('username',
                 'password',
                 'admin_access',
-                'groups',
-                'employer')
+                'clientId')
             .where({ username: emailOrUsername, is_active: 1})
             .orWhere({ email: emailOrUsername, is_active: 1})
             .first()
-            .catch( _ => res.status(500).send('erro ao se comunicar com o banco de dados!'))
+            .catch( err => {
+                console.log(err)
+                res.status(500).send('erro ao se comunicar com o banco de dados!')
+            })
                 
         if (!user) return res.status(400).send('Usuário não encontrado!')
 
@@ -34,9 +36,10 @@ module.exports = app => {
             username: user.username,
             avatar: user.username.substr(0, 1),
             id: user.id,
+            clientId: user.clientId,
             admin_access: user.admin_access.split(','),
-            groups: user.groups.split(','),
-            employer: user.employer,
+            // groups: user.groups.split(','),
+            // employer: user.employer,
             iat: now,
             exp: now + (60 * 60 * 24 * 3)
         }

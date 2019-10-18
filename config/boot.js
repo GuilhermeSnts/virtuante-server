@@ -1,4 +1,4 @@
-const port = 3000
+const port = 3011
 
 module.exports = app => {
     app.listen(port, () => { //escuta na porta definida

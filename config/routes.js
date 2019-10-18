@@ -6,34 +6,47 @@ module.exports = app => {
     app.route('/evento')
         .get(app.sse.init)
 
-    app.get('/', app.api.notFound)
     app.post('/signin', app.api.auth.signin) // Login
-    
-    app.get('/documents', app.api.documents.getAll)
 
-    //SYS QUALITY
- 
-    app.route('/sysquality/os')
-        .get(app.api.sysquality.os.getAll)
-        .post(app.api.sysquality.os.create)
-        
-    app.route('/sysquality/os/:id')
-        .get(app.api.sysquality.os.getOne)
-        .put(app.api.sysquality.os.update)
-        .delete(app.api.sysquality.os.remove)
+    app.get('/document-collection/treeview', app.api.document.collection.getEntireList)
 
-    app.route('/sysquality/clients')
-        .get(app.api.sysquality.clients.getAll)
-        .post(app.api.sysquality.clients.create)
-        
-    app.route('/sysquality/clients/:id')
-        .get(app.api.sysquality.clients.getOne)
-        .put(app.api.sysquality.clients.update)
-        .delete(app.api.sysquality.clients.remove)
+    app.route('/user')
+        .get(app.api.user.user.get)
+        .post(app.api.user.user.save)
 
-    app.post('/sysquality/rat', app.api.sysquality.rat.getAll)
-    app.route('/sysquality/rat/:id')
-        .get(app.api.sysquality.rat.getOne)
-        .put(app.api.sysquality.rat.update)
-        .delete(app.api.sysquality.rat.remove)
+    app.route('/user/:id')
+        .get(app.api.user.user.getById)
+
+    app.route('/document-collection')
+        .get(app.api.document.collection.get)
+        .post(app.api.document.collection.save)
+
+    app.route('/document-collection/:id')
+        .put(app.api.document.collection.save)
+        .get(app.api.document.collection.getById)
+        .delete(app.api.document.collection.deleteById)
+
+    app.route('/document-group')
+        .get(app.api.document.group.get)
+        .post(app.api.document.group.save)
+
+    app.route('/document-group/:id')
+        .put(app.api.document.group.save)
+        .get(app.api.document.group.getById)
+        .delete(app.api.document.group.deleteWithContent)
+
+    app.route('/documents')
+        .get(app.api.document.document.get)
+        .post(app.api.document.document.save)
+
+    app.route('/documents/tree')
+        .get(app.api.document.document.getTree)
+
+    app.route('/documents/group/:id')
+        .get(app.api.document.document.getByGroup)
+
+    app.route('/document/:id')
+        .put(app.api.document.document.save)
+        .delete(app.api.document.document.remove)
+        .get(app.api.document.document.getById)
 }
